@@ -156,7 +156,7 @@ namespace RPGCharacterAnimsFREE
 
         private void Attacking()
         {
-            if (!rpgCharacterController.CanStartAction("Attack")) { return; }
+            //if (!rpgCharacterController.CanStartAction("Attack")) { return; }
             if (inputAttackL) {
                 rpgCharacterController.StartAction("Attack", new Actions.AttackContext("Attack", "Left"));
             } else if (inputAttackR) {
@@ -167,7 +167,8 @@ namespace RPGCharacterAnimsFREE
         private void Damage()
         {
             // Hit.
-            if (inputLightHit) { rpgCharacterController.StartAction("GetHit", new HitContext()); }
+            if (inputLightHit) { 
+                rpgCharacterController.StartAction("GetHit", new HitContext()); }
 
             // Death.
             if (inputDeath) {
