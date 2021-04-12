@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using RPGCharacterAnimsFREE.Actions;
 
@@ -8,6 +9,10 @@ namespace RPGCharacterAnimsFREE
 	public class RPGCharacterInputController : MonoBehaviour
     {
         RPGCharacterController rpgCharacterController;
+
+        public GameObject RHand;
+        public GameObject LHand;
+        public GameObject Sword;
 
         // Inputs.
         private float inputHorizontal = 0;
@@ -34,7 +39,6 @@ namespace RPGCharacterAnimsFREE
             rpgCharacterController = GetComponent<RPGCharacterController>();
             currentAim = Vector3.zero;
         }
-
         private void Update()
         {
             if (inputPaused) {
@@ -124,7 +128,6 @@ namespace RPGCharacterAnimsFREE
         {
             moveInput = new Vector3(inputHorizontal, inputVertical, 0f);
             rpgCharacterController.SetMoveInput(moveInput);
-
             // Set the input on the jump axis every frame.
             Vector3 jumpInput = isJumpHeld ? Vector3.up : Vector3.zero;
             rpgCharacterController.SetJumpInput(jumpInput);
@@ -159,8 +162,14 @@ namespace RPGCharacterAnimsFREE
             //if (!rpgCharacterController.CanStartAction("Attack")) { return; }
             if (inputAttackL) {
                 rpgCharacterController.StartAction("Attack", new Actions.AttackContext("Attack", "Left"));
+                LHand.GetComponent<BoxCollider>().enabled = true;
+                Sword.GetComponent<BoxCollider>().enabled = true;
+                StartCoroutine(OffHand());
             } else if (inputAttackR) {
+                RHand.GetComponent<BoxCollider>().enabled = true;
+                Sword.GetComponent<BoxCollider>().enabled = true;
                 rpgCharacterController.StartAction("Attack", new Actions.AttackContext("Attack", "Right"));
+                StartCoroutine(OffHand());
             }
         }
 
@@ -217,6 +226,14 @@ namespace RPGCharacterAnimsFREE
             // If we've received input, then "doSwitch" is true, and the context is filled out,
             // so start the SwitchWeapon action.
             if (doSwitch) { rpgCharacterController.StartAction("SwitchWeapon", context); }
+        }
+
+        IEnumerator OffHand()
+        {
+            yield return new WaitForSeconds(0.5f);
+            RHand.GetComponent<BoxCollider>().enabled = false;
+            LHand.GetComponent<BoxCollider>().enabled = false;
+            Sword.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }

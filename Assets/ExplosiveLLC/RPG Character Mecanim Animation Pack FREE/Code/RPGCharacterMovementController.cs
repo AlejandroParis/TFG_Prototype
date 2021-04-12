@@ -22,6 +22,9 @@ namespace RPGCharacterAnimsFREE
         private Animator animator;
         private CapsuleCollider capCollider;
 
+        public GameObject RHand;
+        public GameObject LHand;
+
         [HideInInspector] public Vector3 lookDirection { get; private set; }
 
         /// <summary>
@@ -210,7 +213,8 @@ namespace RPGCharacterAnimsFREE
 			if (rpgCharacterController.isStrafing) { RotateTowardsTarget(rpgCharacterController.aimInput); } 
 			else if (rpgCharacterController.canMove) { RotateTowardsMovementDir(); }
 
-            if (currentState == null && rpgCharacterController.CanStartAction("Idle")) { rpgCharacterController.StartAction("Idle"); }
+            if (currentState == null && rpgCharacterController.CanStartAction("Idle")) { 
+                LHand.GetComponent<BoxCollider>().enabled = false; RHand.GetComponent<BoxCollider>().enabled = false; rpgCharacterController.StartAction("Idle"); }
 
 			// Update animator with local movement values.
 			animator.SetFloat("Velocity X", transform.InverseTransformDirection(currentVelocity).x * movementAnimationMultiplier);

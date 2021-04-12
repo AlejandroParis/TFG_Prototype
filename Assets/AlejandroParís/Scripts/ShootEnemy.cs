@@ -8,15 +8,19 @@ public class ShootEnemy : MonoBehaviour
 {
     public EnemyStats stats;
     public GameObject detectionZone;
+    public int life;
     public GameObject bullet;
     public bool move = true;
+    Rigidbody rbd;
     public bool shoot = true;
     public float range;
     NavMeshAgent agent;
     // Start is called before the first frame update
     void Start()
     {
+        life = stats.life;
         stats.Target = GameObject.Find("Player");
+        rbd = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         StartCoroutine(MoveEnemy());
     }
@@ -24,7 +28,8 @@ public class ShootEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(stats.Target.transform.position.magnitude - this.transform.position.magnitude <= range && shoot)
+        float distance = Vector3.Distance(stats.Target.transform.position, this.transform.position);
+        if(distance <= range && shoot)
         {
             move = false;
             GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
@@ -33,20 +38,52 @@ public class ShootEnemy : MonoBehaviour
             shoot = false;
         }
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "HitBox")
+        {
+            agent.enabled = false;
+            rbd.isKinematic = false;
+            shoot = false;
+            life -= 10;
+            Vector3 knokback = (other.transform.position - this.transform.position).normalized * 800;
+            other.enabled = false;
+            GetComponent<Rigidbody>().AddForce(knokback);
+            StartCoroutine(KnokBack());
+            if (life <= 0)
+            {
+                stats.Target.GetComponent<PlayerStats>().seconds += 20;
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
     IEnumerator MoveEnemy()
     {
-        if (move)
+        if (agent.enabled)
         {
-            agent.SetDestination(stats.Target.transform.position);
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(MoveEnemy());
+            if (move)
+            {
+                agent.SetDestination(stats.Target.transform.position);
+                //yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(1.5f);
+                move = true;
+                shoot = true;
+            }
         }
-        else
-        {
-            yield return new WaitForSeconds(2);
-            move = true;
-            shoot = true;
-            StartCoroutine(MoveEnemy());
-        }
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(MoveEnemy());
+    }
+
+    IEnumerator KnokBack()
+    {
+        yield return new WaitForSeconds(1f);
+        shoot = true;
+        rbd.isKinematic = true;
+        agent.enabled = true;
     }
 }

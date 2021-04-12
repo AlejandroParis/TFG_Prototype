@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Shadow
   - Collide
+  - Enemy
+  - HitBox
   layers:
   - Default
   - TransparentFX
