@@ -81,8 +81,8 @@ public class ShootEnemy : MonoBehaviour
 
     IEnumerator KnokBack()
     {
-        yield return new WaitForSeconds(1f);
-        shoot = true;
+        yield return new WaitForSeconds(1.3f);
+        //shoot = true;
         rbd.isKinematic = true;
         agent.enabled = true;
     }

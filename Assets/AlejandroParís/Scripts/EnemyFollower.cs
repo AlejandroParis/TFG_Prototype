@@ -52,7 +52,7 @@ namespace RPGCharacterAnimsFREE
                 StartCoroutine(KnokBack());
                 if (life <= 0)
                 {
-                    stats.Target.GetComponent<PlayerStats>().seconds += 20;
+                    stats.Target.GetComponent<PlayerStats>().seconds += 30;
                     Destroy(this.gameObject);
                 }
             }
