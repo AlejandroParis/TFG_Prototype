@@ -16,6 +16,8 @@ namespace AlejandroParis
 		int roomnumber = 0;
 		bool end = false;
 
+		public List<GameObject> enemies = new List<GameObject>();
+
 		List<Room> tempendRooms = new List<Room>();
 		List<Room> tempShopRooms = new List<Room>();
 		List<GameObject> allRooms = new List<GameObject>();
@@ -31,7 +33,8 @@ namespace AlejandroParis
 			CheckSides();
 			CheckTypes();
 			DrawAll();
-			BakeAll();
+            SpawnAll();
+            BakeAll();
 			//rooms[gridSize / 2, gridSize / 2] = new Room(new Vector2(gridSize / 2, gridSize / 2), this, new Vector3(0, 0, 0));
 		}
 
@@ -52,9 +55,24 @@ namespace AlejandroParis
 					}
 				}
 			}
-		}
-		
-		void CreateRooms()
+        }
+
+        void SpawnAll()
+        {
+            for (int x = 0; x<gridSizeX* 2; x++)
+            {
+                for (int y = 0; y<gridSizeY* 2; y++)
+                {
+                    if (rooms[x, y] != null)
+                    {
+                        //for (int i = 0; i <= Random.Range(0, rooms[x, y].SpawnPoints.Count-1); i++)
+                        Instantiate(enemies[Random.Range(0, enemies.Count)],new Vector3( rooms[x,y].worldPosition.x, rooms[x, y].worldPosition.y + 2.5f, rooms[x, y].worldPosition.z)/*new Vector3(rooms[x, y].SpawnPoints[i].transform.position.x, rooms[x, y].SpawnPoints[i].transform.position.y + 2.5f, rooms[x, y].SpawnPoints[i].transform.position.z)*/, Quaternion.identity);
+                    }
+                }
+            }
+        }
+
+        void CreateRooms()
 		{
 			Vector3 worldPos = new Vector3(0, 0, 0);
 			//setup
@@ -444,13 +462,20 @@ namespace AlejandroParis
 				}
 				allRooms.Add(temp);
 			}
-		}
+            for (int i = 0; i <= temp.transform.childCount - 1; i++)
+            {
+                if (temp.transform.GetChild(i).name == "SpawnPoint")
+                {
+                    r.SpawnPoints.Add(temp.transform.GetChild(i).gameObject);
+                }
+            }
+        }
 		void BakeAll()
 		{
 			for (int x = 0; x < allRooms.Count; x++)
 			{
-				allRooms[x].GetComponent<NavMeshSurface>().BuildNavMesh();
-			}
+                allRooms[x].GetComponent<NavMeshSurface>().BuildNavMesh();
+            }
 		}
 	}
 }

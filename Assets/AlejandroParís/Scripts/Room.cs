@@ -14,6 +14,8 @@ namespace AlejandroParis
 		public bool end = false;
 		public bool shop = false;
 		public bool doorTop, doorBot, doorLeft, doorRight;
+		
+		public List<GameObject> SpawnPoints = new List<GameObject>();
 		public Room(Vector2 _gridPos, LevelGeneration _lvlg, Vector3 _worldPosition) {
 			gridPos = _gridPos;
 			//type = _type;
