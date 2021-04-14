@@ -15,9 +15,17 @@ public class ShootEnemy : MonoBehaviour
     public bool shoot = true;
     public float range;
     NavMeshAgent agent;
+    public GameObject originalFather;
+    Vector3 originalScale;
+    Quaternion originalRotation;
+
     // Start is called before the first frame update
     void Start()
     {
+        detectionZone = transform.parent.transform.Find("Zone").gameObject;
+        originalScale = transform.localScale;
+        originalRotation = transform.localRotation;
+        originalFather = transform.parent.gameObject;
         life = stats.life;
         stats.Target = GameObject.Find("Player");
         rbd = GetComponent<Rigidbody>();
@@ -28,14 +36,17 @@ public class ShootEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(stats.Target.transform.position, this.transform.position);
-        if(distance <= range && shoot)
+        if (detectionZone.GetComponent<PlayerEnterZone>().playerInside)
         {
-            move = false;
-            GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
-            Vector3 targetshoot = new Vector3(stats.Target.transform.position.x, stats.Target.transform.position.y + 2f, stats.Target.transform.position.z);
-            clone.GetComponent<Rigidbody>().AddForce((targetshoot - clone.transform.position).normalized * 800);
-            shoot = false;
+            float distance = Vector3.Distance(stats.Target.transform.position, this.transform.position);
+            if (distance <= range && shoot)
+            {
+                move = false;
+                GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
+                Vector3 targetshoot = new Vector3(stats.Target.transform.position.x, stats.Target.transform.position.y + 2f, stats.Target.transform.position.z);
+                clone.GetComponent<Rigidbody>().AddForce((targetshoot - clone.transform.position).normalized * 800);
+                shoot = false;
+            }
         }
     }
 
@@ -43,6 +54,7 @@ public class ShootEnemy : MonoBehaviour
     {
         if (other.tag == "HitBox")
         {
+            transform.parent = null;
             agent.enabled = false;
             rbd.isKinematic = false;
             shoot = false;
@@ -61,7 +73,7 @@ public class ShootEnemy : MonoBehaviour
 
     IEnumerator MoveEnemy()
     {
-        if (agent.enabled)
+        if (agent.enabled && detectionZone.GetComponent<PlayerEnterZone>().playerInside)
         {
             if (move)
             {
@@ -82,6 +94,9 @@ public class ShootEnemy : MonoBehaviour
     IEnumerator KnokBack()
     {
         yield return new WaitForSeconds(1.3f);
+        transform.parent = originalFather.transform;
+        transform.localScale = originalScale;
+        transform.localRotation = originalRotation;
         //shoot = true;
         rbd.isKinematic = true;
         agent.enabled = true;

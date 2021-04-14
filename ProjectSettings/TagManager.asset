@@ -8,6 +8,7 @@ TagManager:
   - Collide
   - Enemy
   - HitBox
+  - RoomZone
   layers:
   - Default
   - TransparentFX

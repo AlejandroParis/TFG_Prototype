@@ -8,10 +8,23 @@ public class PlayerStats : MonoBehaviour
     public float seconds = 100;
     public float minutes;
     public Text life;
+    public Text Floor;
+    public int dmg;
+    public int floor = 0;
     // Start is called before the first frame update
+
+    void Awake()
+    {
+        if(GameObject.FindGameObjectWithTag("Player") != this.gameObject)
+        {
+            Destroy(this.gameObject);
+        }
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start()
     {
-        
+        transform.position = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
@@ -20,5 +33,6 @@ public class PlayerStats : MonoBehaviour
         seconds -= Time.deltaTime;
         minutes = (int)(seconds / 60);
         life.text = minutes.ToString() + " : " +  ((int)(seconds - (minutes*60))).ToString();
+        Floor.text = "Floor: " + floor.ToString();
     }
 }

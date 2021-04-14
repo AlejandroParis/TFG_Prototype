@@ -17,6 +17,7 @@ namespace AlejandroParis
 		bool end = false;
 
 		public List<GameObject> enemies = new List<GameObject>();
+		public List<Vector3> roomEPositions = new List<Vector3>();
 
 		List<Room> tempendRooms = new List<Room>();
 		List<Room> tempShopRooms = new List<Room>();
@@ -29,12 +30,18 @@ namespace AlejandroParis
         // Start is called before the first frame update
         void Start()
         {
+			roomEPositions.Add(new Vector3(0.3f, 2.5f, -0.3f));
+			roomEPositions.Add(new Vector3(0.3f, 2.5f, 0.3f));
+			roomEPositions.Add(new Vector3(-0.3f, 2.5f, -0.3f));
+			roomEPositions.Add(new Vector3(-0.3f, 2.5f, -0.3f));
+
+
 			CreateRooms();
 			CheckSides();
 			CheckTypes();
 			DrawAll();
-            SpawnAll();
-            BakeAll();
+			BakeAll();
+			SpawnAll();
 			//rooms[gridSize / 2, gridSize / 2] = new Room(new Vector2(gridSize / 2, gridSize / 2), this, new Vector3(0, 0, 0));
 		}
 
@@ -59,14 +66,20 @@ namespace AlejandroParis
 
         void SpawnAll()
         {
+			GameObject temp;
             for (int x = 0; x<gridSizeX* 2; x++)
             {
                 for (int y = 0; y<gridSizeY* 2; y++)
                 {
                     if (rooms[x, y] != null)
                     {
-                        //for (int i = 0; i <= Random.Range(0, rooms[x, y].SpawnPoints.Count-1); i++)
-                        Instantiate(enemies[Random.Range(0, enemies.Count)],new Vector3( rooms[x,y].worldPosition.x, rooms[x, y].worldPosition.y + 2.5f, rooms[x, y].worldPosition.z)/*new Vector3(rooms[x, y].SpawnPoints[i].transform.position.x, rooms[x, y].SpawnPoints[i].transform.position.y + 2.5f, rooms[x, y].SpawnPoints[i].transform.position.z)*/, Quaternion.identity);
+						int numofEnemies = Random.Range(0, 4);
+						for (int i = 0; i < numofEnemies; i++)
+						{
+							temp = Instantiate(enemies[Random.Range(0, enemies.Count)], roomEPositions[i], Quaternion.identity);
+							temp.transform.parent = rooms[x, y].room.transform;
+							temp.transform.localPosition = roomEPositions[i];
+						}
                     }
                 }
             }
@@ -381,6 +394,7 @@ namespace AlejandroParis
 						//rend.sprite = spU;
 					}
 				}
+				r.room = temp;
 				allRooms.Add(temp);
 				return;
 			}
@@ -422,6 +436,7 @@ namespace AlejandroParis
 
 					//rend.sprite = spD;
 				}
+				r.room = temp;
 				allRooms.Add(temp);
 				return;
 			}
@@ -462,14 +477,9 @@ namespace AlejandroParis
 				}
 				allRooms.Add(temp);
 			}
-            for (int i = 0; i <= temp.transform.childCount - 1; i++)
-            {
-                if (temp.transform.GetChild(i).name == "SpawnPoint")
-                {
-                    r.SpawnPoints.Add(temp.transform.GetChild(i).gameObject);
-                }
-            }
-        }
+            
+            r.room = temp;
+		}
 		void BakeAll()
 		{
 			for (int x = 0; x < allRooms.Count; x++)

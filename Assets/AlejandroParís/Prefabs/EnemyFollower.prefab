@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2494774, y: 1, z: 1.1598086}
-  m_Center: {x: -0.012832165, y: 0, z: 0.07990432}
+  m_Size: {x: 1.1514132, y: 1, z: 1.0724934}
+  m_Center: {x: -0.0023126304, y: 0, z: 0.036246777}
 --- !u!1 &7794750099704207129
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,6 +160,7 @@ MonoBehaviour:
   Children: {fileID: 5958040993380921550}
   move: 1
   life: 0
+  originalFather: {fileID: 0}
 --- !u!195 &7794750099704207135
 NavMeshAgent:
   m_ObjectHideFlags: 0
