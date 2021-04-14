@@ -24,12 +24,15 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        transform.position = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(this.gameObject.transform.position.y < 0)
+        {
+            this.transform.position = new Vector3(0, 0, 0);
+        }
         seconds -= Time.deltaTime;
         minutes = (int)(seconds / 60);
         life.text = minutes.ToString() + " : " +  ((int)(seconds - (minutes*60))).ToString();

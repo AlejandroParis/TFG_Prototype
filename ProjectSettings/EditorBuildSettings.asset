@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: "Assets/AlejandroPar\xEDs/Scene/TestProceduralMap.unity"
+    guid: fee4d5f1abba9b14f8cdfb30d0941fd9
   m_configObjects: {}

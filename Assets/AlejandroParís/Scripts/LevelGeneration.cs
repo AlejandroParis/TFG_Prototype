@@ -30,10 +30,10 @@ namespace AlejandroParis
         // Start is called before the first frame update
         void Start()
         {
-			roomEPositions.Add(new Vector3(0.3f, 2.5f, -0.3f));
-			roomEPositions.Add(new Vector3(0.3f, 2.5f, 0.3f));
-			roomEPositions.Add(new Vector3(-0.3f, 2.5f, -0.3f));
-			roomEPositions.Add(new Vector3(-0.3f, 2.5f, -0.3f));
+			roomEPositions.Add(new Vector3(0.25f, 2.5f, -0.25f));
+			roomEPositions.Add(new Vector3(0.25f, 2.5f, 0.25f));
+			roomEPositions.Add(new Vector3(-0.25f, 2.5f, -0.25f));
+			roomEPositions.Add(new Vector3(-0.25f, 2.5f, -0.25f));
 
 
 			CreateRooms();
@@ -314,8 +314,11 @@ namespace AlejandroParis
 				{
 					if (temprand < 2 || roomnumber >= tempendRooms.Count-1)
 					{
-						rooms[(int)tempendRooms[x].realGridPos.x, (int)tempendRooms[x].realGridPos.y].end = true;
-						end = true;
+						if (rooms[(int)tempendRooms[x].realGridPos.x, (int)tempendRooms[x].realGridPos.y] != null)
+						{
+							rooms[(int)tempendRooms[x].realGridPos.x, (int)tempendRooms[x].realGridPos.y].end = true;
+							end = true;
+						}
 					}
 					roomnumber++;
 				}
