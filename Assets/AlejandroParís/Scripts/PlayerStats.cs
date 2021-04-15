@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerStats : MonoBehaviour
     public Text Floor;
     public int dmg;
     public int floor = 0;
+    public GameObject CMCamera;
     // Start is called before the first frame update
 
     void Awake()
@@ -24,6 +26,12 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
+        //CMCamera = GameObject.Find("CM FreeLook");
+        //CMCamera.GetComponent<CinemachineVirtualCamera>().LookAt = this.gameObject.transform;
+        //CMCamera.GetComponent<CinemachineVirtualCamera>().Follow = this.gameObject.transform;
+        GameObject canvas = GameObject.Find("Canvas");
+        life = canvas.transform.Find("Life").GetComponent<Text>();
+        Floor = canvas.transform.Find("Floor").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -37,5 +45,11 @@ public class PlayerStats : MonoBehaviour
         minutes = (int)(seconds / 60);
         life.text = minutes.ToString() + " : " +  ((int)(seconds - (minutes*60))).ToString();
         Floor.text = "Floor: " + floor.ToString();
+
+        if(seconds <= 0 && minutes <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }
