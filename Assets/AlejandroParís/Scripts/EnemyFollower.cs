@@ -19,6 +19,7 @@ namespace RPGCharacterAnimsFREE
         public GameObject originalFather;
         Vector3 originalScale;
         Quaternion originalRotation;
+        bool detected = false;
 
         // Start is called before the first frame update
         void Start()
@@ -72,13 +73,17 @@ namespace RPGCharacterAnimsFREE
         }
         IEnumerator MoveEnemy()
         {
-            if (agent.enabled && detectionZone.GetComponent<PlayerEnterZone>().playerInside)
+            if (detectionZone.GetComponent<PlayerEnterZone>().playerInside)
+            {
+                detected = true;
+            }
+            if (detected && agent.enabled)
             {
                 if (move)
                 {
                     agent.SetDestination(stats.Target.transform.position);
                 }
-                else if(damage)
+                else if (damage)
                 {
                     stats.Target.GetComponent<PlayerStats>().seconds -= 10;
                     agent.enabled = false;
@@ -95,7 +100,7 @@ namespace RPGCharacterAnimsFREE
 
         IEnumerator KnokBack()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             transform.parent = originalFather.transform;
             transform.localScale = originalScale;
             transform.localRotation = originalRotation;
@@ -103,6 +108,7 @@ namespace RPGCharacterAnimsFREE
             rbd.isKinematic = true;
             agent.enabled = true;
             Children.GetComponent<BoxCollider>().enabled = true;
+            move = true;
         }
     }
 }
