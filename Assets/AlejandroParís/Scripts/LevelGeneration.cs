@@ -15,6 +15,7 @@ namespace AlejandroParis
 		public int numberRooms = 10;
 		int roomnumber = 0;
 		bool end = false;
+		bool shop = false;
 
 		public List<GameObject> enemies = new List<GameObject>();
 		public List<Vector3> roomEPositions = new List<Vector3>();
@@ -27,8 +28,9 @@ namespace AlejandroParis
 		List<Vector2> takenPositions = new List<Vector2>();
 		public GameObject[] roomsPrefabs;
 		public GameObject[] endRooms;
-        // Start is called before the first frame update
-        void Start()
+		public GameObject[] shopRooms;
+		// Start is called before the first frame update
+		void Start()
         {
 			roomEPositions.Add(new Vector3(0.25f, 2.5f, -0.25f));
 			roomEPositions.Add(new Vector3(0.25f, 2.5f, 0.25f));
@@ -71,7 +73,7 @@ namespace AlejandroParis
             {
                 for (int y = 0; y<gridSizeY* 2; y++)
                 {
-                    if (rooms[x, y] != null)
+                    if (rooms[x, y] != null && rooms[x,y].worldPosition != new Vector3(0,0,0) && !rooms[x,y].end && !rooms[x,y].shop)
                     {
 						int numofEnemies = Random.Range(0, 4);
 						for (int i = 0; i < numofEnemies; i++)
@@ -310,18 +312,24 @@ namespace AlejandroParis
 			for (int x = 0; x < tempendRooms.Count; x++)
 			{
 				float temprand = Random.Range(0, 10);
-				if (!end)
+				if (!end || !shop)
 				{
-					if (temprand < 2 || roomnumber >= tempendRooms.Count-1)
+					if (temprand < 2 || x >= tempendRooms.Count-1)
 					{
-						if (rooms[(int)tempendRooms[x].realGridPos.x, (int)tempendRooms[x].realGridPos.y] != null)
+						if (rooms[(int)tempendRooms[x].realGridPos.x, (int)tempendRooms[x].realGridPos.y] != null && !end)
 						{
 							rooms[(int)tempendRooms[x].realGridPos.x, (int)tempendRooms[x].realGridPos.y].end = true;
+							tempendRooms.RemoveAt(x);
 							end = true;
+							x = -1;
+						}
+                        else
+                        {
+							rooms[(int)tempendRooms[x].realGridPos.x, (int)tempendRooms[x].realGridPos.y].shop = true;
+							shop = true;
 						}
 					}
-					roomnumber++;
-				}
+				} 
 			}
 		}
 
@@ -389,7 +397,11 @@ namespace AlejandroParis
 							temp = Instantiate(endRooms[3], r.worldPosition, Quaternion.identity);
 							temp.transform.parent = grid.transform;
 						}
-						else
+						else if (r.shop)
+						{
+							temp = Instantiate(shopRooms[3], r.worldPosition, Quaternion.identity);
+							temp.transform.parent = grid.transform;
+						}else
 						{
 							temp = Instantiate(roomsPrefabs[11], r.worldPosition, Quaternion.identity);
 							temp.transform.parent = grid.transform;
@@ -431,8 +443,13 @@ namespace AlejandroParis
 						temp = Instantiate(endRooms[0], r.worldPosition, Quaternion.identity);
 						temp.transform.parent = grid.transform;
 					}        
-                    else
-                    {
+                    else if (r.shop)
+					{
+						temp = Instantiate(shopRooms[0], r.worldPosition, Quaternion.identity);
+						temp.transform.parent = grid.transform;
+					}
+					else
+					{
 						temp = Instantiate(roomsPrefabs[1], r.worldPosition, Quaternion.identity);
 						temp.transform.parent = grid.transform;
 					}
@@ -458,8 +475,13 @@ namespace AlejandroParis
 							temp = Instantiate(endRooms[2], r.worldPosition, Quaternion.identity);
 							temp.transform.parent = grid.transform;					
 						}
-						else
-						{
+						else if (r.shop)
+					{
+						temp = Instantiate(shopRooms[2], r.worldPosition, Quaternion.identity);
+						temp.transform.parent = grid.transform;
+					}
+					else
+					{
 							temp = Instantiate(roomsPrefabs[5], r.worldPosition, Quaternion.identity);
 							temp.transform.parent = grid.transform;
 						}
@@ -473,8 +495,13 @@ namespace AlejandroParis
 					temp = Instantiate(endRooms[1], r.worldPosition, Quaternion.identity);
 					temp.transform.parent = grid.transform;
 				}
+				else if (r.shop)
+				{
+					temp = Instantiate(shopRooms[1], r.worldPosition, Quaternion.identity);
+					temp.transform.parent = grid.transform;
+				}
 				else
-                {
+				{
 					temp = Instantiate(roomsPrefabs[2], r.worldPosition, Quaternion.identity);
 					temp.transform.parent = grid.transform;
 				}

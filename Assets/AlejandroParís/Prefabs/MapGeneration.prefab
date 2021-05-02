@@ -46,6 +46,10 @@ MonoBehaviour:
   gridsizeX: 35
   gridsizeY: 35
   numberRooms: 10
+  enemies:
+  - {fileID: 7794750099704207129, guid: 295927188bf1af24daa106264acec201, type: 3}
+  - {fileID: 6145285969715198018, guid: bd8398108a5779d439831ea94e7abc6a, type: 3}
+  roomEPositions: []
   grid: {fileID: 0}
   roomsPrefabs:
   - {fileID: 3978477240532125318, guid: 9014aa19eb27aa449b09cf9c6d6cccb6, type: 3}
@@ -68,3 +72,8 @@ MonoBehaviour:
   - {fileID: 3116445240149367371, guid: bfad4c6e5424d0d45a88f53c1446fe10, type: 3}
   - {fileID: 2841253733910481032, guid: bcb6810f14aa6844eab2047f48490197, type: 3}
   - {fileID: 5006903399836505632, guid: 3b9856a25dd6e5a4888987f097c629b6, type: 3}
+  shopRooms:
+  - {fileID: 7685118696475683275, guid: e6ac2fe3f73876a4bb2161ec8dc16b1c, type: 3}
+  - {fileID: 5300192656179371910, guid: 1d57f058bdbc90d469d7734ffca123f5, type: 3}
+  - {fileID: 5851189916386550377, guid: 21c86d37113f0f84e8913c594fd6b118, type: 3}
+  - {fileID: 7601927667009779377, guid: 9e11b0bee4bde8c4f8234ebde1e1ffbe, type: 3}
