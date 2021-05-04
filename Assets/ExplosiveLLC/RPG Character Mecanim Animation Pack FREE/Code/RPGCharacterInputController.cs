@@ -52,7 +52,7 @@ namespace RPGCharacterAnimsFREE
             Inputs();
             Moving();
             Damage();
-            SwitchWeapons();
+            //SwitchWeapons();
             Strafing();
             Rolling();
             Attacking();
@@ -194,38 +194,49 @@ namespace RPGCharacterAnimsFREE
         /// the list of two handed weapons. Left cycles through the left hand weapons. Right cycles through
         /// the right hand weapons.
         /// </summary>
-        private void SwitchWeapons()
+        public void SwitchWeapons()
         {
-            // Bail out if we can't switch weapons.
-            if (!rpgCharacterController.CanStartAction("SwitchWeapon")) { return; }
-
-            bool doSwitch = false;
-            SwitchWeaponContext context = new SwitchWeaponContext();
-            int weaponNumber = 0;
-
-            // Cycle through 2H weapons any input happens on the up-down axis.
-            if (Mathf.Abs(inputSwitchUpDown) > 0.1f) {
+                SwitchWeaponContext context = new SwitchWeaponContext();
+                int weaponNumber = 0;
                 int[] twoHandedWeapons = new int[] {
                     (int) Weapon.TwoHandSword,
                 };
-                // If we're not wielding 2H weapon already, just switch to the first one in the list.
-                if (System.Array.IndexOf(twoHandedWeapons, rpgCharacterController.rightWeapon) == -1) {
-					weaponNumber = twoHandedWeapons[0];
-				}
-                else {
-                    weaponNumber = 0;
-                }
-                // Set up the context and flag that we actually want to perform the switch.
-                doSwitch = true;
+                weaponNumber = twoHandedWeapons[0];
                 context.type = "Switch";
                 context.side = "None";
                 context.leftWeapon = -1;
                 context.rightWeapon = weaponNumber;
-            }
+                rpgCharacterController.StartAction("SwitchWeapon", context);
+    //        // Bail out if we can't switch weapons.
+    //        if (!rpgCharacterController.CanStartAction("SwitchWeapon")) { return; }
 
-            // If we've received input, then "doSwitch" is true, and the context is filled out,
-            // so start the SwitchWeapon action.
-            if (doSwitch) { rpgCharacterController.StartAction("SwitchWeapon", context); }
+    //        bool doSwitch = false;
+    //        SwitchWeaponContext context = new SwitchWeaponContext();
+    //        int weaponNumber = 0;
+
+    //        // Cycle through 2H weapons any input happens on the up-down axis.
+    //        if (Mathf.Abs(inputSwitchUpDown) > 0.1f) {
+    //            int[] twoHandedWeapons = new int[] {
+    //                (int) Weapon.TwoHandSword,
+    //            };
+    //            // If we're not wielding 2H weapon already, just switch to the first one in the list.
+    //            if (System.Array.IndexOf(twoHandedWeapons, rpgCharacterController.rightWeapon) == -1) {
+				//	weaponNumber = twoHandedWeapons[0];
+				//}
+    //            else {
+    //                weaponNumber = 0;
+    //            }
+    //            // Set up the context and flag that we actually want to perform the switch.
+    //            doSwitch = true;
+    //            context.type = "Switch";
+    //            context.side = "None";
+    //            context.leftWeapon = -1;
+    //            context.rightWeapon = weaponNumber;
+    //        }
+
+    //        // If we've received input, then "doSwitch" is true, and the context is filled out,
+    //        // so start the SwitchWeapon action.
+    //        if (doSwitch) { rpgCharacterController.StartAction("SwitchWeapon", context); }
         }
 
         IEnumerator OffHand()

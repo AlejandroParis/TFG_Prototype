@@ -58,7 +58,7 @@ public class ShootEnemy : MonoBehaviour
             agent.enabled = false;
             rbd.isKinematic = false;
             shoot = false;
-            life -= 10;
+            life -= stats.Target.GetComponent<PlayerStats>().dmg;
             Vector3 knokback = (other.transform.position - this.transform.position).normalized * 800;
             other.enabled = false;
             GetComponent<Rigidbody>().AddForce(knokback);

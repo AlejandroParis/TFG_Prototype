@@ -20,6 +20,7 @@ namespace RPGCharacterAnimsFREE
         Vector3 originalScale;
         Quaternion originalRotation;
         bool detected = false;
+        PlayerStats playerStats;
 
         // Start is called before the first frame update
         void Start()
@@ -32,6 +33,7 @@ namespace RPGCharacterAnimsFREE
             stats.Target = GameObject.Find("Player");
             rbd = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
+            playerStats = stats.Target.GetComponent<PlayerStats>();
             StartCoroutine(MoveEnemy());
         }
 
@@ -65,7 +67,7 @@ namespace RPGCharacterAnimsFREE
                     StartCoroutine(KnokBack());
                     if (life <= 0)
                     {
-                        stats.Target.GetComponent<PlayerStats>().seconds += 30;
+                        stats.Target.GetComponent<PlayerStats>().seconds += 15;
                         Destroy(this.gameObject);
                     }
                 }
@@ -85,7 +87,11 @@ namespace RPGCharacterAnimsFREE
                 }
                 else if (damage)
                 {
-                    stats.Target.GetComponent<PlayerStats>().seconds -= 10;
+                    int dmg = (int)(10 + ((playerStats.floor - (playerStats.defensePowerUp / 2)) * 2));
+                    if (dmg <= 0)
+                        stats.Target.GetComponent<PlayerStats>().seconds -= 0;
+                    else
+                        stats.Target.GetComponent<PlayerStats>().seconds -= dmg;
                     agent.enabled = false;
                     yield return new WaitForSeconds(1.5f);
                     Children.GetComponent<BoxCollider>().enabled = true;

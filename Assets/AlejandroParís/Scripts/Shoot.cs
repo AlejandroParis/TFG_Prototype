@@ -25,7 +25,11 @@ namespace RPGCharacterAnimsFREE
             if (other.tag == "Player")
             {
                 other.GetComponent<RPGCharacterController>().StartAction("GetHit", new HitContext(1, Vector3.back));
-                target.GetComponent<PlayerStats>().seconds -= 10;
+                int dmg = (int)(10 + ((target.GetComponent<PlayerStats>().floor - (target.GetComponent<PlayerStats>().defensePowerUp / 2)) * 2));
+                if(dmg <= 0)
+                    target.GetComponent<PlayerStats>().seconds -= 0;
+                else
+                    target.GetComponent<PlayerStats>().seconds -= dmg;
                 Destroy(this.gameObject);
             }
         }
