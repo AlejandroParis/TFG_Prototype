@@ -92,7 +92,7 @@ namespace RPGCharacterAnimsFREE
                         stats.Target.GetComponent<PlayerStats>().seconds -= 0;
                     else
                         stats.Target.GetComponent<PlayerStats>().seconds -= dmg;
-                    agent.enabled = false;
+                    //agent.enabled = false;
                     yield return new WaitForSeconds(1.5f);
                     Children.GetComponent<BoxCollider>().enabled = true;
                     agent.enabled = true;
@@ -107,11 +107,11 @@ namespace RPGCharacterAnimsFREE
         IEnumerator KnokBack()
         {
             yield return new WaitForSeconds(1f);
-            transform.parent = originalFather.transform;
-            transform.localScale = originalScale;
-            transform.localRotation = originalRotation;
+            //transform.parent = originalFather.transform;
+            //transform.localScale = originalScale;
+            //transform.localRotation = originalRotation;
             //move = true;
-            rbd.isKinematic = true;
+            //rbd.isKinematic = true;
             agent.enabled = true;
             Children.GetComponent<BoxCollider>().enabled = true;
             move = true;

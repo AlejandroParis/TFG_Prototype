@@ -42,7 +42,7 @@ using UnityEngine.UI;
         // Update is called once per frame
         void Update()
         {
-            if (this.gameObject.transform.position.y < 0)
+            if (this.gameObject.transform.position.y < -5)
             {
                 this.transform.position = new Vector3(0, 0, 0);
             }

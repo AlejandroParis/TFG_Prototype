@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2622575629207851897}
   - component: {fileID: 3464484297651385307}
   - component: {fileID: 9012766421498126223}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 5350755620798698115}
   - component: {fileID: 9043744415518949943}
   - component: {fileID: 718181969581031557}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 3446762364382552775}
   - component: {fileID: 7996146469968145728}
   - component: {fileID: 6863863587976865188}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 3509513567343583560}
   - component: {fileID: 1695989406843113997}
   - component: {fileID: 3120085789183952574}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 7933412496812500794}
   - component: {fileID: 8764226953840984405}
   - component: {fileID: 7891309923850986669}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 5709726724883363022}
   - component: {fileID: 8839238406012235657}
   - component: {fileID: 6697638180332374372}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 3208645690913700478}
   - component: {fileID: 3739416193684206567}
   - component: {fileID: 6107198528523099160}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -869,7 +869,7 @@ GameObject:
   - component: {fileID: 4929248704918303154}
   - component: {fileID: 5846749021463992570}
   - component: {fileID: 8536599054239367360}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,6 +13,7 @@ public class ShootEnemy : MonoBehaviour
     public bool move = true;
     Rigidbody rbd;
     public bool shoot = true;
+    public bool knock = false;
     public float range;
     NavMeshAgent agent;
     public GameObject originalFather;
@@ -39,7 +40,7 @@ public class ShootEnemy : MonoBehaviour
         if (detectionZone.GetComponent<PlayerEnterZone>().playerInside)
         {
             float distance = Vector3.Distance(stats.Target.transform.position, this.transform.position);
-            if (distance <= range && shoot)
+            if (distance <= range && shoot && !knock)
             {
                 move = false;
                 GameObject clone = Instantiate(bullet, transform.position, Quaternion.identity);
@@ -58,6 +59,7 @@ public class ShootEnemy : MonoBehaviour
             agent.enabled = false;
             rbd.isKinematic = false;
             shoot = false;
+            //move = false;
             life -= stats.Target.GetComponent<PlayerStats>().dmg;
             Vector3 knokback = (other.transform.position - this.transform.position).normalized * 800;
             other.enabled = false;
@@ -93,12 +95,15 @@ public class ShootEnemy : MonoBehaviour
 
     IEnumerator KnokBack()
     {
+        knock = true;
         yield return new WaitForSeconds(1.3f);
+        knock = false;
         transform.parent = originalFather.transform;
         transform.localScale = originalScale;
         transform.localRotation = originalRotation;
         //shoot = true;
         rbd.isKinematic = true;
         agent.enabled = true;
+        //move = true;
     }
 }

@@ -139,6 +139,7 @@ MonoBehaviour:
   bullet: {fileID: 1511142454161728641, guid: 179cf317619d5424283d81afea7444fd, type: 3}
   move: 1
   shoot: 1
+  knock: 0
   range: 10
   originalFather: {fileID: 0}
 --- !u!54 &6145285970599193537
