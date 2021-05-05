@@ -26,6 +26,7 @@ public class NextFloor : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             other.GetComponent<PlayerStats>().floor += 1;
+            player.transform.position = new Vector3(0, 0, 0);
             SceneManager.LoadScene("TestProceduralMap");
         }
     }

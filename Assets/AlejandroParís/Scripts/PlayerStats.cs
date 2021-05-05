@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-    public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour
     {
         public float seconds = 100;
         public float minutes;
@@ -16,6 +17,7 @@ using UnityEngine.UI;
         //public bool sword = true;
         public int attackPowerUp = 0;
         public int defensePowerUp = 0;
+        public GameObject map;
 
         // Start is called before the first frame update
 
@@ -36,15 +38,25 @@ using UnityEngine.UI;
             GameObject canvas = GameObject.Find("Canvas");
             life = canvas.transform.Find("Life").GetComponent<Text>();
             Floor = canvas.transform.Find("Floor").GetComponent<Text>();
+            map = GameObject.Find("Map");
+            this.transform.position = map.transform.position;
             //GetComponent<RPGCharacterInputController>().SwitchWeapons();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (this.gameObject.transform.position.y < -5)
+            if(map == null)
             {
-                this.transform.position = new Vector3(0, 0, 0);
+                map = GameObject.Find("Map");
+            }
+            if(map.transform.childCount <= 0)
+            {
+                SceneManager.LoadScene("TestProceduralMap");
+            }
+            if (this.gameObject.transform.position.y < -0.1f)
+            {
+                this.transform.position = map.transform.position;
             }
             seconds -= Time.deltaTime;
             minutes = (int)(seconds / 60);

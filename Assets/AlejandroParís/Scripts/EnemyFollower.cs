@@ -29,11 +29,11 @@ namespace RPGCharacterAnimsFREE
             originalScale = transform.localScale;
             originalRotation = transform.localRotation;
             originalFather = transform.parent.gameObject;
-            life = stats.life;
             stats.Target = GameObject.Find("Player");
             rbd = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
             playerStats = stats.Target.GetComponent<PlayerStats>();
+            life = stats.life + (5 * playerStats.floor);
             StartCoroutine(MoveEnemy());
         }
 
@@ -67,7 +67,7 @@ namespace RPGCharacterAnimsFREE
                     StartCoroutine(KnokBack());
                     if (life <= 0)
                     {
-                        stats.Target.GetComponent<PlayerStats>().seconds += 15;
+                        stats.Target.GetComponent<PlayerStats>().seconds += 20;
                         Destroy(this.gameObject);
                     }
                 }

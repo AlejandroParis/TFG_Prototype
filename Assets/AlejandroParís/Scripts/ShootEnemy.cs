@@ -19,6 +19,7 @@ public class ShootEnemy : MonoBehaviour
     public GameObject originalFather;
     Vector3 originalScale;
     Quaternion originalRotation;
+    PlayerStats playerStats;
 
     // Start is called before the first frame update
     void Start()
@@ -27,10 +28,11 @@ public class ShootEnemy : MonoBehaviour
         originalScale = transform.localScale;
         originalRotation = transform.localRotation;
         originalFather = transform.parent.gameObject;
-        life = stats.life;
         stats.Target = GameObject.Find("Player");
         rbd = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
+        playerStats = stats.Target.GetComponent<PlayerStats>();
+        life = stats.life + (5 * playerStats.floor);
         StartCoroutine(MoveEnemy());
     }
 
